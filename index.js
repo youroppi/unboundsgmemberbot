@@ -22,8 +22,6 @@ const sheets = google.sheets({ version: 'v4', auth });
 // 3. Telegram bot setup
 // You can store your bot token in an environment variable BOT_TOKEN for security, or paste it directly
 // e.g., const bot = new Telegraf('1234567:ABC-DEF1234ghIkl-zyx57W2v1u123ew11');
-const bot = new Telegraf(process.env.BOT_TOKEN);
-
 // /start command
 bot.start((ctx) => {
   return ctx.reply(
