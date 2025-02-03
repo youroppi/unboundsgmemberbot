@@ -16,15 +16,6 @@ const auth = new google.auth.JWT(
 
 const sheets = google.sheets({ version: 'v4', auth });
 
-// 2. Authorize a JWT client with the service account
-const auth = new google.auth.JWT(
-  keys.client_email,
-  null,
-  keys.private_key.replace(/\\n/g, '\n'), // Some JSON files contain \n instead of actual newlines
-  ['https://www.googleapis.com/auth/spreadsheets.readonly']
-);
-
-const sheets = google.sheets({ version: 'v4', auth });
 
 // 3. Telegram bot setup
 // You can store your bot token in an environment variable BOT_TOKEN for security, or paste it directly
