@@ -2,7 +2,7 @@
 const { Telegraf } = require('telegraf');
 const { google } = require('googleapis');
 const fs = require('fs');
-// require('dotenv').config(); // if you want to load environment variables from .env
+require('dotenv').config(); // if you want to load environment variables from .env
 
 // Load the JSON from the environment variable
 const googleCreds = JSON.parse(process.env.GOOGLE_CREDS);
