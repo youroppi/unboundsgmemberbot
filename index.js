@@ -19,15 +19,25 @@ const auth = new google.auth.JWT(
 );
 const sheets = google.sheets({ version: 'v4', auth });
 
-
 // 3. Telegram bot setup
 // You can store your bot token in an environment variable BOT_TOKEN for security, or paste it directly
 // e.g., const bot = new Telegraf('1234567:ABC-DEF1234ghIkl-zyx57W2v1u123ew11');
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// 4. Command: /start
+// /start command
 bot.start((ctx) => {
-  ctx.reply(
-    `Welcome, ${ctx.from.username || ctx.from.first_name}! Type /points to see your points.`
+  return ctx.reply(
+    "Welcome to Unbound Singapore Bot!\n\nChoose an option below:",
+    {
+      reply_markup: {
+        keyboard: [
+          ["/points", "/howtoredeem"],
+          ["/prizes"]
+        ],
+        resize_keyboard: true,
+        one_time_keyboard: false
+      }
+    }
   );
 });
 
@@ -73,8 +83,25 @@ bot.command('points', async (ctx) => {
     ctx.reply('Sorry, something went wrong. Please try again later.');
   }
 });
-
-// 8. Start the bot (long-polling)
-bot.launch().then(() => {
-  console.log('Bot is running. Press Ctrl+C to stop.');
+// New /howtoredeem command
+bot.command('howtoredeem', (ctx) => {
+  ctx.reply(
+    "You can message our admin @idekrus to redeem your points.\n" +
+    "Prizes vary from time to time."
+  );
 });
+
+// New /prizes command
+bot.command('prizes', (ctx) => {
+  ctx.reply(
+    "Current point redemption:\n" +
+    "• 15 points → $2 Mr Bean vouchers\n" +
+    "• 30 points → $10 Grab Vouchers\n" +
+    "• 50 points → $20 Grab Vouchers\n" +
+    "• 75 points → $30 Frasers Vouchers\n" +
+    "More to come!"
+  );
+});
+
+// Launch bot
+bot.launch();
