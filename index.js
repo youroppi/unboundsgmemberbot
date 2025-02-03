@@ -2,18 +2,20 @@
 const { Telegraf } = require('telegraf');
 const { google } = require('googleapis');
 const fs = require('fs');
-require('dotenv').config(); // if you want to load environment variables from .env
+// require('dotenv').config(); // if you want to load environment variables from .env
 
+// Load the JSON from the environment variable
 const googleCreds = JSON.parse(process.env.GOOGLE_CREDS);
 
-// Some private_key fields have escaped newlines, so we handle that:
+// Convert literal \n to real newlines in the private_key (only if you see \n in the text)
+googleCreds.private_key = googleCreds.private_key.replace(/\\n/g, '\n');
+
 const auth = new google.auth.JWT(
   googleCreds.client_email,
   null,
-  googleCreds.private_key.replace(/\\n/g, '\n'), // Convert literal \n to actual newlines
+  googleCreds.private_key,
   ['https://www.googleapis.com/auth/spreadsheets.readonly']
 );
-
 const sheets = google.sheets({ version: 'v4', auth });
 
 
