@@ -27,7 +27,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 // /start command
 bot.start((ctx) => {
   return ctx.reply(
-    "Welcome to Unbound Singapore Bot!\n\nChoose an option below:",
+    "Welcome to Unbound Singapore Members Bot!\n\nChoose an option below:",
     {
       reply_markup: {
         keyboard: [
