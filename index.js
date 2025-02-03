@@ -1,6 +1,24 @@
 // index.js
 const { Telegraf } = require('telegraf');
 const { google } = require('googleapis');
+const express = require('express');
+const app = express();
+
+// Render (and many other PaaS hosts) set a PORT environment variable.
+// Fallback to 3000 if it's not set.
+const PORT = process.env.PORT || 3000;
+
+// Simple route just to show it's working.
+app.get('/', (req, res) => {
+  res.send('Bot is running!');
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
+
+
 const fs = require('fs');
 require('dotenv').config(); // if you want to load environment variables from .env
 
@@ -26,7 +44,7 @@ const sheets = google.sheets({ version: 'v4', auth });
 // /start command
 bot.start((ctx) => {
   return ctx.reply(
-    "Welcome to Unbound Singapore Bot!",
+    "Welcome to Unbound Singapore Members Bot! Choose from one of the options below:",
     {
       reply_markup: {
         inline_keyboard: [
@@ -124,3 +142,11 @@ bot.action("PRIZES_CMD", async (ctx) => {
 
 // Launch bot
 bot.launch();
+
+app.get('/', (req, res) => {
+  res.send('Bot is running!');
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
