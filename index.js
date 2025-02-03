@@ -4,8 +4,17 @@ const { google } = require('googleapis');
 const fs = require('fs');
 require('dotenv').config(); // if you want to load environment variables from .env
 
-// 1. Load the credentials JSON
-const keys = require('./credentials.json');
+const googleCreds = JSON.parse(process.env.GOOGLE_CREDS);
+
+// Some private_key fields have escaped newlines, so we handle that:
+const auth = new google.auth.JWT(
+  googleCreds.client_email,
+  null,
+  googleCreds.private_key.replace(/\\n/g, '\n'), // Convert literal \n to actual newlines
+  ['https://www.googleapis.com/auth/spreadsheets.readonly']
+);
+
+const sheets = google.sheets({ version: 'v4', auth });
 
 // 2. Authorize a JWT client with the service account
 const auth = new google.auth.JWT(
