@@ -4,16 +4,17 @@ const { google } = require('googleapis');
 const fs = require('fs');
 require('dotenv').config(); // if you want to load environment variables from .env
 
-// Load the JSON from the environment variable
-const googleCreds = JSON.parse(process.env.GOOGLE_CREDS);
+const keys = require('./credentials.json'); // JSON with your Google API credentials
 
-// Convert literal \n to real newlines in the private_key (only if you see \n in the text)
-googleCreds.private_key = googleCreds.private_key.replace(/\\n/g, '\n');
+// 1. Initialize the bot
+const bot = new Telegraf(process.env.BOT_TOKEN); 
+// or const bot = new Telegraf('<YOUR_BOT_API_TOKEN>');
 
+// 2. Configure Google Sheets
 const auth = new google.auth.JWT(
-  googleCreds.client_email,
+  keys.client_email,
   null,
-  googleCreds.private_key,
+  keys.private_key,
   ['https://www.googleapis.com/auth/spreadsheets.readonly']
 );
 const sheets = google.sheets({ version: 'v4', auth });
