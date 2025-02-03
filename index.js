@@ -142,11 +142,3 @@ bot.action("PRIZES_CMD", async (ctx) => {
 
 // Launch bot
 bot.launch();
-
-app.get('/', (req, res) => {
-  res.send('Bot is running!');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
